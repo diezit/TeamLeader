@@ -55,9 +55,7 @@ class Deal
      */
     public function info($id)
     {
-        return $this->teamleader->getCall('deals.info', [
-            'body' => json_encode(['id' => $id]),
-        ]);
+        return $this->teamleader->getCall('deals.info?'.http_build_query(['id' => $id]));
     }
 
     /**

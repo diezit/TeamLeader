@@ -51,10 +51,13 @@ class Webhook
     /**
      * Register a new webhook.
      */
-    public function register($data)
+    public function register($url, $types)
     {
         return $this->teamleader->postCall('webhooks.register', [
-            'body' => json_encode($data),
+            'body' => json_encode([
+                'url'   => $url,
+                'types' => $types,
+            ]),
         ]);
     }
 
