@@ -300,7 +300,7 @@ class TeamLeader
         return new Crm($this);
     }
 
-    public function deals()
+    public function deal()
     {
         return new Deal($this);
     }
