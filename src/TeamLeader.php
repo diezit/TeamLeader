@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use MadeITBelgium\TeamLeader\Crm\Crm;
 use MadeITBelgium\TeamLeader\Deals\Deal;
+use MadeITBelgium\TeamLeader\Deals\Quotation;
 use MadeITBelgium\TeamLeader\Webhooks\Webhook;
 
 /**
@@ -303,6 +304,11 @@ class TeamLeader
     public function deal()
     {
         return new Deal($this);
+    }
+
+    public function quotation()
+    {
+        return new Quotation($this);
     }
 
     public function calendar()
