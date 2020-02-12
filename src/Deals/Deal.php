@@ -45,7 +45,7 @@ class Deal
      */
     public function list($data = [])
     {
-        return $this->teamleader->getCall('deals.list', [
+        return $this->teamleader->postCall('deals.list', [
             'body' => json_encode($data),
         ]);
     }

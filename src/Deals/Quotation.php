@@ -39,6 +39,43 @@ class Quotation
     }
 
     /**
+     * Store the quotations for the deal in teamleader
+     *
+     * @param  int  $deal_id V1 id of the deal to be updated
+     * @param  array  $items containing quotations
+     * @param  bool  $append should the order lines be appended to the existing order lines or overwritten?
+     */
+    public function store(int $deal_id, array $items, bool $append = true)
+    {
+        $postData = ['deal_id' => $deal_id];
+        $itemCount = 0;
+
+        if ($append) {
+            // fetch existing quotations for this deal and append this to the post data
+            $info = $this->teamleader->postV1Call('getDeal.php', $postData);
+            foreach ($info->items as $existing) {
+                $itemCount++;
+                $postData['description_'.$itemCount] = $existing->text;
+                $postData['price_'.$itemCount] = $existing->price_per_unit;
+                $postData['amount_'.$itemCount] = $existing->amount;
+                $postData['vat_'.$itemCount] = $existing->vat_rate;
+            }
+        }
+
+        // Now add our new quotation items to the post data
+        foreach ($items as $key => $item) {
+            $itemCount++;
+            $postData['description_'.$itemCount] = $item['description'];
+            $postData['price_'.$itemCount] = $item['price'];
+            $postData['amount_'.$itemCount] = $item['amount'];
+            $postData['vat_'.$itemCount] = $item['vat'];
+        }
+
+        // Send all quotations to the api so the deal is updated.
+        $this->teamleader->postV1Call('updateDealItems.php', $postData);
+    }
+
+    /**
      * Get details for a single quotation.
      */
     public function info($id)

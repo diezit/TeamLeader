@@ -45,7 +45,12 @@ class Company
      */
     public function list($data = [])
     {
-        return $this->teamleader->getCall('companies.list?'.http_build_query($data));
+        if(!empty($data)) {
+            return $this->teamleader->postCall('companies.list', [
+                'body' => json_encode($data),
+            ]);
+        }
+        return $this->teamleader->getCall('companies.list');
     }
 
     /**

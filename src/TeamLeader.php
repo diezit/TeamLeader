@@ -26,9 +26,12 @@ class TeamLeader
     protected $version = '1.0.0';
     protected $apiVersion = '1.0';
     private $apiServer = 'https://api.teamleader.eu';
+    private $v1ApiServer = 'https://app.teamleader.eu/api/';
     private $authServer = 'https://app.teamleader.eu';
     private $clientId;
     private $clientSecret;
+    private $apiGroup;
+    private $apiSecret;
     private $accessToken;
     private $refreshToken;
     private $expiresAt;
@@ -94,6 +97,16 @@ class TeamLeader
     public function setRefreshToken($refreshToken)
     {
         $this->refreshToken = $refreshToken;
+    }
+
+    public function setApiGroup($apiGroup)
+    {
+        $this->apiGroup = $apiGroup;
+    }
+
+    public function setApiSecret($apiSecret)
+    {
+        $this->apiSecret = $apiSecret;
     }
 
     public function getRefreshToken()
@@ -175,21 +188,6 @@ class TeamLeader
             \Log::info($e->getResponse()->getBody());
 
             throw $e;
-            if ($e->getCode() == 400) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); //Bad reqeust
-            } elseif ($e->getCode() == 401) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); //Unauthorized
-            } elseif ($e->getCode() == 403) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); //Forbidden
-            } elseif ($e->getCode() == 404) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); // Not Found
-            } elseif ($e->getCode() == 429) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); //To Many Requests
-            } elseif ($e->getCode() == 500) {
-                throw new Exception($e->getResponse(), $e->getCode(), $e); //Internal server error
-            }
-
-            throw $e;
         }
 
         if ($response->getStatusCode() == 200 || $response->getStatusCode() == 201 || $response->getStatusCode() == 204) {
@@ -214,6 +212,24 @@ class TeamLeader
     public function postCall($endPoint, $data)
     {
         return $this->call('POST', $endPoint, $data);
+    }
+
+    public function postV1Call($endPoint, $data)
+    {
+        $data['api_group'] = $this->apiGroup;
+        $data['api_secret'] = $this->apiSecret;
+
+        try {
+            $response = $this->client->request('POST', $this->v1ApiServer.$endPoint, ['form_params' => $data]);
+            $body = (string) $response->getBody();
+            return json_decode($body);
+        } catch (ServerException $e) {
+            throw $e;
+        } catch (ClientException $e) {
+            \Log::info($e->getResponse()->getBody());
+
+            throw $e;
+        }
     }
 
     public function getCall($endPoint)
