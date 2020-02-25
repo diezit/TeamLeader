@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\ServerException;
 use MadeITBelgium\TeamLeader\Crm\Crm;
 use MadeITBelgium\TeamLeader\Deals\Deal;
 use MadeITBelgium\TeamLeader\Deals\Quotation;
+use MadeITBelgium\TeamLeader\Products\Product;
 use MadeITBelgium\TeamLeader\Webhooks\Webhook;
 
 /**
@@ -337,6 +338,7 @@ class TeamLeader
 
     public function product()
     {
+        return new Product($this);
     }
 
     public function project()
