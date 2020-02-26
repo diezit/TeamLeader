@@ -45,12 +45,7 @@ class Product
      */
     public function list($data = [])
     {
-        if (!empty($data)) {
-            return $this->teamleader->postCall('products.list', [
-                'body' => json_encode($data),
-            ]);
-        }
-        return $this->teamleader->getCall('products.list');
+        return $this->teamleader->postV1Call('getProducts.php', $data);
     }
 
     /**
@@ -58,7 +53,7 @@ class Product
      */
     public function info($id)
     {
-        return $this->teamleader->getCall('products.info?'.http_build_query(['id' => $id]));
+        return $this->teamleader->postV1Call('getProduct.php', ['product_id' => $id]);
     }
 
     /**
