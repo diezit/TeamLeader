@@ -12,6 +12,7 @@ use MadeITBelgium\TeamLeader\Deals\Deal;
 use MadeITBelgium\TeamLeader\Deals\Quotation;
 use MadeITBelgium\TeamLeader\Products\Product;
 use MadeITBelgium\TeamLeader\Webhooks\Webhook;
+use MadeITBelgium\TeamLeader\Departments\Department;
 
 /**
  * TeamLeader Laravel PHP SDK.
@@ -321,6 +322,11 @@ class TeamLeader
     public function deal()
     {
         return new Deal($this);
+    }
+
+    public function department()
+    {
+        return new Department($this);
     }
 
     public function quotation()
