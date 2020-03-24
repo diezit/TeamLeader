@@ -12,6 +12,7 @@ use MadeITBelgium\TeamLeader\Deals\Deal;
 use MadeITBelgium\TeamLeader\Notes\Note;
 use MadeITBelgium\TeamLeader\Deals\Quotation;
 use MadeITBelgium\TeamLeader\Products\Product;
+use MadeITBelgium\TeamLeader\Projects\Project;
 use MadeITBelgium\TeamLeader\Webhooks\Webhook;
 use MadeITBelgium\TeamLeader\Departments\Department;
 
@@ -348,13 +349,14 @@ class TeamLeader
         return new Product($this);
     }
 
+    public function project()
+    {
+        return new Project($this);
+    }
+
     public function note()
     {
         return new Note($this);
-    }
-
-    public function project()
-    {
     }
 
     public function timeTracking()
