@@ -43,11 +43,22 @@ class Project
     /**
      * Get a list of projects
      */
-    public function list($amount, $pageno)
+    public function list($amount, $pageno, $searchby = null, $show_active_only = null, $selected_customfields = null)
     {
-        return $this->teamleader->postV1Call('getProjects.php', [
+        $params = [
             'amount' => $amount,
             'pageno'   => $pageno
-        ]);
+        ];
+        if ($searchby) {
+            $params['searchby'] = $searchby;
+        }
+        if ($show_active_only) {
+            $params['show_active_only'] = $show_active_only;
+        }
+        if ($selected_customfields) {
+            $params['selected_customfields'] = $selected_customfields;
+        }
+
+        return $this->teamleader->postV1Call('getProjects.php', $params);
     }
 }
