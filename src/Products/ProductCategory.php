@@ -11,7 +11,7 @@ namespace MadeITBelgium\TeamLeader\Products;
  * @author     Robin van Schuilenburg <robin@diezit.nl>
  * @license    http://www.gnu.org/licenses/old-licenses/lgpl-3.txt    LGPL
  */
-class Product
+class ProductCategory
 {
     private $teamleader;
 
@@ -41,39 +41,11 @@ class Product
     }
 
     /**
-     * Get a list of products.
+     * Get a list of product categories.
      */
     public function list($data = [])
     {
-        return $this->teamleader->getCall('products.list?'.http_build_query($data));
-    }
-
-    public function listV1($data = [])
-    {
-        return $this->teamleader->postV1Call('getProducts.php', $data);
-    }
-
-    /**
-     * Get details for a single product.
-     */
-    public function info($id)
-    {
-        return $this->teamleader->getCall('products.info?'.http_build_query(['id' => $id]));
-    }
-
-    public function infoV1($id)
-    {
-        return $this->teamleader->postV1Call('getProduct.php', ['product_id' => $id]);
-    }
-
-    /**
-     * Add a new product.
-     */
-    public function add($data)
-    {
-        return $this->teamleader->postCall('products.add', [
-            'body' => json_encode($data),
-        ]);
+        return $this->teamleader->getCall('productCategories.list?'.http_build_query($data));
     }
 
 }
