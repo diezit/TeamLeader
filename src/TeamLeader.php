@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\ServerException;
 use MadeITBelgium\TeamLeader\Crm\Crm;
 use MadeITBelgium\TeamLeader\Deals\Deal;
 use MadeITBelgium\TeamLeader\Notes\Note;
+use MadeITBelgium\TeamLeader\Invoicing\Vat;
 use MadeITBelgium\TeamLeader\Deals\Quotation;
 use MadeITBelgium\TeamLeader\Products\Product;
 use MadeITBelgium\TeamLeader\Products\ProductCategory;
@@ -363,6 +364,11 @@ class TeamLeader
     public function note()
     {
         return new Note($this);
+    }
+
+    public function vat()
+    {
+        return new Vat($this);
     }
 
     public function timeTracking()
