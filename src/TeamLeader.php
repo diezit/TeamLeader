@@ -15,6 +15,7 @@ use MadeITBelgium\TeamLeader\Deals\Quotation;
 use MadeITBelgium\TeamLeader\Products\Product;
 use MadeITBelgium\TeamLeader\Products\ProductCategory;
 use MadeITBelgium\TeamLeader\Projects\Project;
+use MadeITBelgium\TeamLeader\CustomFields\CustomField;
 use MadeITBelgium\TeamLeader\Webhooks\Webhook;
 use MadeITBelgium\TeamLeader\Departments\Department;
 
@@ -369,6 +370,11 @@ class TeamLeader
     public function vat()
     {
         return new Vat($this);
+    }
+
+    public function customField()
+    {
+        return new CustomField($this);
     }
 
     public function timeTracking()
