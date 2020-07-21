@@ -45,7 +45,7 @@ class Quotation
      * @param  array  $items containing quotations
      * @param  bool  $append should the order lines be appended to the existing order lines or overwritten?
      */
-    public function store(int $deal_id, array $items, bool $append = true)
+    public function storeV1(int $deal_id, array $items, bool $append = true)
     {
         $postData = ['deal_id' => $deal_id];
         $itemCount = 0;
@@ -89,5 +89,29 @@ class Quotation
     public function download($id, $format = 'pdf')
     {
         return $this->teamleader->postCall('quotations.download?'.http_build_query(['id' => $id, 'format' => $format]));
+    }
+
+    /**
+     * Create a new quotation for a deal.
+     */
+    public function create($deal_id, $data)
+    {
+        $data['deal_id'] = $deal_id;
+
+        return $this->teamleader->postCall('quotations.create', [
+            'body' => json_encode($data),
+        ]);
+    }
+
+    /**
+     * Update a quotation.
+     */
+    public function update($id, $data)
+    {
+        $data['id'] = $id;
+
+        return $this->teamleader->postCall('quotations.update', [
+            'body' => json_encode($data),
+        ]);
     }
 }
