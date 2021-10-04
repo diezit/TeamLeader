@@ -77,7 +77,8 @@ class TeamLeader
                 'User-Agent' => 'Made I.T. PHP SDK V'.$this->version,
                 'Accept'     => 'application/json',
             ],
-            'verify' => true,
+            // @TODO: Re-enable SSL verification after adding their cert to our server.
+            'verify' => false,
         ]);
     }
 
