@@ -41,9 +41,39 @@ class Project
     }
 
     /**
+     * Get a list of projects.
+     */
+    public function list($data = [])
+    {
+        return $this->teamleader->postCall('projects.list', [
+            'body' => json_encode($data),
+        ]);
+    }
+
+    /**
+     * Get details for a single projects.
+     */
+    public function info($id)
+    {
+        return $this->teamleader->getCall('projects.info?'.http_build_query(['id' => $id]));
+    }
+
+    /**
+     * Update a project.
+     */
+    public function update($id, $data)
+    {
+        $data['id'] = $id;
+
+        return $this->teamleader->postCall('projects.update', [
+            'body' => json_encode($data),
+        ]);
+    }
+
+    /**
      * Get a list of projects
      */
-    public function list($amount, $pageno, $searchby = null, $show_active_only = null, $selected_customfields = null)
+    public function listV1($amount, $pageno, $searchby = null, $show_active_only = null, $selected_customfields = null)
     {
         $params = [
             'amount' => $amount,
@@ -60,5 +90,10 @@ class Project
         }
 
         return $this->teamleader->postV1Call('getProjects.php', $params);
+    }
+
+    public function getV1($id)
+    {
+        return $this->teamleader->postV1Call('getProject.php', ['project_id' => $id]);
     }
 }
