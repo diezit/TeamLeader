@@ -44,6 +44,8 @@ class TeamLeader
     private $expiresAt;
     private $scope;
     private $redirectUri;
+    private $rateLimitRemaining = 100;
+    private $rateLimitReset;
 
     private $client;
 
@@ -171,6 +173,10 @@ class TeamLeader
      */
     private function call($requestType, $endPoint, $data = null)
     {
+        if ($this->rateLimitRemaining <= 5) {
+            $this->waitForRateLimitReset();
+        }
+
         $body = [];
         if ($data !== null && isset($data['multipart'])) {
             $body = $data;
@@ -204,7 +210,20 @@ class TeamLeader
             throw new Exception('Invalid teamleader statuscode', $response->getStatusCode());
         }
 
+        if ($response->hasHeader('X-RateLimit-Remaining')) {
+            $this->rateLimitRemaining = $response->getHeader('X-RateLimit-Remaining')[0];
+            $this->rateLimitReset = $response->getHeader('X-RateLimit-Reset')[0];
+        }
+
         return json_decode($body);
+    }
+
+    private function waitForRateLimitReset()
+    {
+        sleep(1);
+        while (Carbon::now()->lessThanOrEqualTo(Carbon::parse($this->rateLimitReset))) {
+            sleep(1);
+        }
     }
 
     public function buildHeader()
