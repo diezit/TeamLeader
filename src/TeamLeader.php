@@ -61,7 +61,7 @@ class TeamLeader
     private function createClient()
     {
         $this->client = new Client([
-            'timeout'  => 10.0,
+            'timeout'  => 20.0,
             'headers'  => [
                 'User-Agent' => 'Made I.T. PHP SDK V'.$this->version,
                 'Accept'     => 'application/json',
