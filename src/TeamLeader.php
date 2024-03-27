@@ -65,6 +65,7 @@ class TeamLeader
             'headers'  => [
                 'User-Agent' => 'Made I.T. PHP SDK V'.$this->version,
                 'Accept'     => 'application/json',
+                'X-Api-Version' => '2023-09-26',
             ],
             'verify' => true,
         ]);
