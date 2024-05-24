@@ -74,10 +74,11 @@ class TeamLeader
     private function createClient()
     {
         $this->client = new Client([
-            'timeout'  => 10.0,
+            'timeout'  => 20.0,
             'headers'  => [
                 'User-Agent' => 'Made I.T. PHP SDK V'.$this->version,
                 'Accept'     => 'application/json',
+                'X-Api-Version' => '2023-09-26',
             ],
             // @TODO: Re-enable SSL verification after adding their cert to our server.
             'verify' => false,
