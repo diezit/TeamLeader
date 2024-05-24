@@ -70,30 +70,4 @@ class Project
         ]);
     }
 
-    /**
-     * Get a list of projects
-     */
-    public function listV1($amount, $pageno, $searchby = null, $show_active_only = null, $selected_customfields = null)
-    {
-        $params = [
-            'amount' => $amount,
-            'pageno'   => $pageno
-        ];
-        if ($searchby) {
-            $params['searchby'] = $searchby;
-        }
-        if ($show_active_only) {
-            $params['show_active_only'] = $show_active_only;
-        }
-        if ($selected_customfields) {
-            $params['selected_customfields'] = $selected_customfields;
-        }
-
-        return $this->teamleader->postV1Call('getProjects.php', $params);
-    }
-
-    public function getV1($id)
-    {
-        return $this->teamleader->postV1Call('getProject.php', ['project_id' => $id]);
-    }
 }

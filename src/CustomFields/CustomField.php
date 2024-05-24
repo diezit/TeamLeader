@@ -45,7 +45,7 @@ class CustomField
      */
     public function list($data = [])
     {
-        return $this->teamleader->postV1Call('getCustomFields.php', $data);
+        return $this->teamleader->getCall('customFieldDefinitions.list?'.http_build_query($data));
     }
 
     /**
@@ -53,7 +53,7 @@ class CustomField
      */
     public function info($id)
     {
-        return $this->teamleader->postV1Call('getCustomFieldInfo.php', ['custom_field_id' => $id]);
+        return $this->teamleader->getCall('customFieldDefinitions.info?'.http_build_query(['id' => $id]));
     }
 
 }

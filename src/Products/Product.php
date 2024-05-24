@@ -48,32 +48,12 @@ class Product
         return $this->teamleader->getCall('products.list?'.http_build_query($data));
     }
 
-    public function listV1($data = [])
-    {
-        return $this->teamleader->postV1Call('getProducts.php', $data);
-    }
-
     /**
      * Get details for a single product.
      */
     public function info($id)
     {
         return $this->teamleader->getCall('products.info?'.http_build_query(['id' => $id]));
-    }
-
-    public function infoV1($id)
-    {
-        return $this->teamleader->postV1Call('getProduct.php', ['product_id' => $id]);
-    }
-
-    /**
-     * Add a new product.
-     */
-    public function add($data)
-    {
-        return $this->teamleader->postCall('products.add', [
-            'body' => json_encode($data),
-        ]);
     }
 
 }

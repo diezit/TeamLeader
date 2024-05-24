@@ -43,13 +43,9 @@ class Note
     /**
      * Get a list of notes for a given object.
      */
-    public function list($object_type, $object_id, $page_no)
+    public function list($data = [])
     {
-        return $this->teamleader->postV1Call('getNotes.php', [
-            'object_type' => $object_type,
-            'object_id'   => $object_id,
-            'page_no'     => $page_no,
-        ]);
+        return $this->teamleader->getCall('notes.list?'.http_build_query($data));
     }
 
     /**
@@ -57,6 +53,8 @@ class Note
      */
     public function create($data)
     {
-        return $this->teamleader->postV1Call('addNote.php', $data);
+        return $this->teamleader->postCall('notes.create', [
+            'body' => json_encode($data),
+        ]);
     }
 }

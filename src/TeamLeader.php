@@ -33,7 +33,6 @@ class TeamLeader
     protected $version = '1.0.0';
     protected $apiVersion = '1.0';
     private $apiServer = 'https://api.teamleader.eu';
-    private $v1ApiServer = 'https://app.teamleader.eu/api/';
     private $authServer = 'https://app.teamleader.eu';
     private $clientId;
     private $clientSecret;
@@ -240,24 +239,6 @@ class TeamLeader
     public function postCall($endPoint, $data)
     {
         return $this->call('POST', $endPoint, $data);
-    }
-
-    public function postV1Call($endPoint, $data)
-    {
-        $data['api_group'] = $this->apiGroup;
-        $data['api_secret'] = $this->apiSecret;
-
-        try {
-            $response = $this->client->request('POST', $this->v1ApiServer.$endPoint, ['form_params' => $data]);
-            $body = (string) $response->getBody();
-            return json_decode($body);
-        } catch (ServerException $e) {
-            throw $e;
-        } catch (ClientException $e) {
-            \Log::info($e->getResponse()->getBody());
-
-            throw $e;
-        }
     }
 
     public function getCall($endPoint)
